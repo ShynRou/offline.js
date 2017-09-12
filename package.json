@@ -1,8 +1,11 @@
 {
   "name": "offlinejs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Generator for ServiceWorker serving static files",
   "main": "index.js",
+  "bin": {
+    "offlinejs": "index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
