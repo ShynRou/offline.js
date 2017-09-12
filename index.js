@@ -40,24 +40,31 @@ if (userConfig) {
     userConfig = JSON.parse(userConfig);
   } catch (error) {
     console.error(error);
+    process.exit(1);
+  }
+
+  if (userConfig.path) {
+    userConfig.path = path.join(root, userConfig.path);
+    if (userConfig.injectInto) {
+      userConfig.injectInto = path.join(userConfig, userConfig.injectInto);
+    }
+  }
+  if (userConfig.template) {
+    userConfig.template = path.join(root, userConfig.template);
   }
 }
 
 const config = Object.assign(
   {
-    path: 'dist',
+    path: path.join(root, 'dist'),
     exclude: false,
     include: '.*',
     version: Date.now(),
-    template: './offline.js',
-    injectInto: 'index.html'
+    template: path.join(__dirname, 'offline.js'),
+    injectInto: path.join(root, 'dist/index.html')
   },
   userConfig
 );
-
-config.path = path.join(root, config.path);
-config.template = path.join(root, config.template);
-config.injectInto = path.join(config.path, config.injectInto);
 
 
 // CREATE SERVICE WORKER ==============================================================================
@@ -66,7 +73,7 @@ const include = config.include && new RegExp(config.include);
 
 var staticFiles = walk(config.path);
 staticFiles = staticFiles.filter(function (f) {
-  return f && ((exclude && !exclude.test(f)) || (include && include.test(f)));
+  return f && !/offline\.js$/.test(f) && ((exclude && !exclude.test(f)) || (include && include.test(f)));
 }).map(function (f) {
   var relative = path.relative(config.path, f).replace(/\\/g, '/');
   return '"' + relative + '"';
