@@ -101,8 +101,7 @@ if (config.injectInto) {
   var injectContent = readFile(config.injectInto, true);
   injectContent
   injectContent = injectContent
-    .replace(/\s*\<script async type\=\"text\/javascript\" src\=\"offline.js\"\>\<\/script\>\s*/g, '')
-    .replace(/(\s*)(\<\/body\>)/, '$1  <script async type="text/javascript" src="offline.js"></script>$1$2');
+    .replace(/(\s*)(\<\/body\>)/, '$1  <script>'+readFile(path.join(__dirname, 'offline.loader.js'))+'</script>$1$2');
 
   fs.writeFile(
     path.join(config.injectInto),
