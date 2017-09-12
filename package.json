@@ -1,0 +1,26 @@
+{
+  "name": "offline.js",
+  "version": "1.0.0",
+  "description": "Generator for ServiceWorker serving static files",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShynRou/offline.js.git"
+  },
+  "keywords": [
+    "serviceworker",
+    "service",
+    "worker",
+    "offline",
+    "tool"
+  ],
+  "author": "Dustin 'ShynRou' Hagemeier",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/ShynRou/offline.js/issues"
+  },
+  "homepage": "https://github.com/ShynRou/offline.js#readme"
+}
