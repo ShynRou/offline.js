@@ -1,5 +1,5 @@
 {
-  "name": "offline.js",
+  "name": "offlinejs",
   "version": "1.0.0",
   "description": "Generator for ServiceWorker serving static files",
   "main": "index.js",
