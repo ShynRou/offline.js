@@ -31,7 +31,7 @@ function walk(dir) {
   return results;
 };
 
-const root = (require.main ? path.dirname(require.main.filename) : process.cwd());
+const root = process.cwd() || __dirname;
 
 var userConfig = readFile(path.join(root, 'offline.json'));
 
