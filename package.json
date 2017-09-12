@@ -1,6 +1,6 @@
 {
   "name": "offlinejs",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Generator for ServiceWorker serving static files",
   "main": "index.js",
   "bin": {

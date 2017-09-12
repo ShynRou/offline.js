@@ -46,7 +46,7 @@ if (userConfig) {
   if (userConfig.path) {
     userConfig.path = path.join(root, userConfig.path);
     if (userConfig.injectInto) {
-      userConfig.injectInto = path.join(userConfig, userConfig.injectInto);
+      userConfig.injectInto = path.join(userConfig.path, userConfig.injectInto);
     }
   }
   if (userConfig.template) {
