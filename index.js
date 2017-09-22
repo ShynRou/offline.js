@@ -77,11 +77,13 @@ staticFiles = staticFiles.filter(function (f) {
 }).map(function (f) {
   var relative = path.relative(config.path, f).replace(/\\/g, '/');
   return '"' + relative + '"';
-}).join(',');
+});
 
-if(staticFiles.indexOf('offline.js') < 0) {
-  staticFiles.push('offline\.js');
+if(staticFiles.indexOf('"offline.js"') < 0) {
+  staticFiles.push('"offline.js"');
 }
+
+staticFiles = staticFiles.join(',');
 
 var content = readFile(config.template, true);
 
