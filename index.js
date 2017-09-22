@@ -73,11 +73,15 @@ const include = config.include && new RegExp(config.include);
 
 var staticFiles = walk(config.path);
 staticFiles = staticFiles.filter(function (f) {
-  return f && !/offline\.js$/.test(f) && ((exclude && !exclude.test(f)) || (include && include.test(f)));
+  return f && ((exclude && !exclude.test(f)) || (include && include.test(f)));
 }).map(function (f) {
   var relative = path.relative(config.path, f).replace(/\\/g, '/');
   return '"' + relative + '"';
 }).join(',');
+
+if(staticFiles.indexOf('offline.js') < 0) {
+  staticFiles.push('offline\.js');
+}
 
 var content = readFile(config.template, true);
 
