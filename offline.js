@@ -1,6 +1,6 @@
 self.addEventListener('install', function (event) {
   event['waitUntil'](
-    caches.open(/*[version]*/).then(function (cache) {
+    caches.open("/*[version]*/").then(function (cache) {
       return cache.addAll([
         /*[static_files]*/
       ]);
@@ -10,7 +10,7 @@ self.addEventListener('install', function (event) {
 
 self.addEventListener('activate', function(event) {
 
-  var cacheWhitelist = [/*[version]*/];
+  var cacheWhitelist = ["/*[version]*/"];
 
   event.waitUntil(
     caches.keys().then(function(cacheNames) {

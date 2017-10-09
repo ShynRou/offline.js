@@ -61,7 +61,8 @@ const config = Object.assign(
     include: '.*',
     version: Date.now(),
     template: path.join(__dirname, 'offline.js'),
-    injectInto: path.join(root, 'dist/index.html')
+    injectInto: path.join(root, 'dist/index.html'),
+    data: {}
   },
   userConfig
 );
@@ -73,7 +74,7 @@ const include = config.include && new RegExp(config.include);
 
 var staticFiles = walk(config.path);
 staticFiles = staticFiles.filter(function (f) {
-  return f && ((exclude && !exclude.test(f)) || (include && include.test(f)));
+  return f && ((!exclude || !exclude.test(f)) && (include && include.test(f)));
 }).map(function (f) {
   var relative = path.relative(config.path, f).replace(/\\/g, '/');
   return '"' + relative + '"';
@@ -88,7 +89,16 @@ staticFiles = staticFiles.join(',');
 var content = readFile(config.template, true);
 
 content = content.replace(/\/\*\[static_files\]\*\//gi, staticFiles);
-content = content.replace(/\/\*\[version\]\*\//gi, '"' + config.version + '"');
+content = content.replace(/\/\*\[version\]\*\//gi, config.version);
+content = content.replace(/\/\*\[data\]\*\//gi, config.data.toJSON());
+
+// inject data
+var dataKeys = Object.keys(data);
+
+for(var i = 0; i < dataKeys.length; i++) {
+  var regex = new RegExp('\\/\\*\\[data\\.'+dataKeys[i]+'\\]\\*\\/','gi');
+  content = content.replace(regex, data[dataKeys[i]]);
+}
 
 fs.writeFile(
   path.join(config.path, 'offline.js'),
