@@ -3,6 +3,14 @@
 var fs = require('fs');
 var path = require('path');
 
+console.log('\n=========================================================================\nofflinejs executing');
+
+var configFile = 'offline.js';
+if (process.argv && process.argv.length > 2) {
+  configFile = process.argv[2];
+}
+console.log('- config '+configFile);
+
 function readFile(path, crashOnFailure) {
   try {
     var filename = require.resolve(path);
@@ -13,7 +21,7 @@ function readFile(path, crashOnFailure) {
       process.exit(1);
     }
   }
-};
+}
 
 function walk(dir) {
   var results = [];
@@ -29,11 +37,11 @@ function walk(dir) {
     }
   });
   return results;
-};
+}
 
 const root = process.cwd() || __dirname;
 
-var userConfig = readFile(path.join(root, 'offline.json'));
+var userConfig = readFile(path.join(root, configFile));
 
 if (userConfig) {
   try {
@@ -72,6 +80,8 @@ const config = Object.assign(
 const exclude = config.exclude && new RegExp(config.exclude);
 const include = config.include && new RegExp(config.include);
 
+
+console.log('- search destination '+config.path);
 var staticFiles = walk(config.path);
 staticFiles = staticFiles.filter(function (f) {
   return f && ((!exclude || !exclude.test(f)) && (include && include.test(f)));
@@ -83,23 +93,27 @@ staticFiles = staticFiles.filter(function (f) {
 if(staticFiles.indexOf('"offline.js"') < 0) {
   staticFiles.push('"offline.js"');
 }
+console.log('  - statics found: '+ staticFiles.length);
 
 staticFiles = staticFiles.join(',');
 
+console.log('- load template '+config.template);
 var content = readFile(config.template, true);
 
+console.log('  - inject parameters');
 content = content.replace(/\/\*\[static_files\]\*\//gi, staticFiles);
 content = content.replace(/\/\*\[version\]\*\//gi, config.version);
-content = content.replace(/\/\*\[data\]\*\//gi, config.data.toJSON());
+content = content.replace(/\/\*\[data\]\*\//gi, JSON.stringify(config.data));
 
 // inject data
-var dataKeys = Object.keys(data);
+var dataKeys = Object.keys(config.data);
 
 for(var i = 0; i < dataKeys.length; i++) {
   var regex = new RegExp('\\/\\*\\[data\\.'+dataKeys[i]+'\\]\\*\\/','gi');
-  content = content.replace(regex, data[dataKeys[i]]);
+  content = content.replace(regex, config.data[dataKeys[i]]);
 }
 
+console.log('  - save in destination');
 fs.writeFile(
   path.join(config.path, 'offline.js'),
   content,
@@ -114,6 +128,7 @@ fs.writeFile(
 // INJECT <script> ==============================================================================
 
 if (config.injectInto) {
+  console.log('- inject registration '+config.injectInto);
   var injectContent = readFile(config.injectInto, true);
   injectContent
   injectContent = injectContent
@@ -130,3 +145,6 @@ if (config.injectInto) {
     }
   );
 }
+
+console.log('SUCCESS\n=========================================================================');
+
