@@ -15,7 +15,7 @@ offlinejs other-config.json
 
 ## options
 | attribute | default | description |
-|-----------|---------|-------------|
+| :-------- | :------ | :---------- |
 | path | "dist" | directory where your project build is generated |
 | injectInto | "dist/index.html" | if the script should inject a loader script, if yes set it to "index.html" or the wanted target |
 | template | "offline.js" | your ServiceWorker template |
