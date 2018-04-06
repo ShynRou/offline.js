@@ -18,9 +18,11 @@
     "service",
     "worker",
     "offline",
-    "tool"
+    "tool",
+    "javascript",
+    "js"
   ],
-  "author": "Dustin 'ShynRou' Hagemeier",
+  "author": "Dustin Hagemeier <dustin@coding.international> (https://coding.international)",
   "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/ShynRou/offline.js/issues"
