@@ -5,7 +5,7 @@ var path = require('path');
 
 console.log('\n=========================================================================\nofflinejs executing');
 
-var configFile = 'offline.js';
+var configFile = 'offline.json';
 if (process.argv && process.argv.length > 2) {
   configFile = process.argv[2];
 }
