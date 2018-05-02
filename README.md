@@ -2,6 +2,11 @@
 
 A simple generator that crawls your build directory and creates a ServiceWorker and injects a loader script into the index.html
 
+```
+npm i -D offlinejs-generator
+```
+
+
 
 Can be configured by creating an offline.json in your project root and calling:
 ```
