@@ -130,7 +130,6 @@ fs.writeFile(
 if (config.injectInto) {
   console.log('- inject registration '+config.injectInto);
   var injectContent = readFile(config.injectInto, true);
-  injectContent
   injectContent = injectContent
     .replace(/(\s*)(\<\/body\>)/, '$1  <script>'+readFile(path.join(__dirname, 'offline.loader.js'))+'</script>$1$2');
 
