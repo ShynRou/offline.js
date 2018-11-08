@@ -68,7 +68,7 @@ const config = Object.assign(
     exclude: false,
     include: '.*',
     version: Date.now(),
-    template: path.join(__dirname, 'offline.js'),
+    template: path.join(__dirname, 'template.js'),
     injectInto: path.join(root, 'dist/index.html'),
     data: {}
   },
